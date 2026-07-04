@@ -3,40 +3,72 @@
 {% block title %}ダッシュボード | Hospital CRM{% endblock %}
 
 {% block content %}
-<h2>Hospital CRM</h2>
+<h1 class="page-title">ダッシュボード</h1>
 
-<div class="summary">
-    <div class="summary-item">
-        病院数
-        <strong>{{ hospital_count }}</strong>
+<div class="row g-3">
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">病院数</div>
+                <div class="metric-value">{{ hospital_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
-    <div class="summary-item">
-        法人数
-        <strong>{{ corporation_count }}</strong>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">法人数</div>
+                <div class="metric-value">{{ corporation_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
-    <div class="summary-item">
-        訪問記録数
-        <strong>{{ visit_count }}</strong>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">訪問記録数</div>
+                <div class="metric-value">{{ visit_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
-    <div class="summary-item">
-        紹介記録数
-        <strong>{{ referral_count }}</strong>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">紹介記録数</div>
+                <div class="metric-value">{{ referral_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
-    <div class="summary-item">
-        Sランク病院数
-        <strong>{{ s_rank_hospital_count }}</strong>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">Sランク病院数</div>
+                <div class="metric-value text-danger">{{ s_rank_hospital_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
-    <div class="summary-item">
-        Aランク病院数
-        <strong>{{ a_rank_hospital_count }}</strong>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">Aランク病院数</div>
+                <div class="metric-value text-warning">{{ a_rank_hospital_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
-    <div class="summary-item">
-        未訪問病院数
-        <strong>{{ unvisited_hospital_count }}</strong>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">未訪問病院数</div>
+                <div class="metric-value">{{ unvisited_hospital_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
-    <div class="summary-item">
-        フォロー未完了件数
-        <strong>{{ incomplete_follow_count }}</strong>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card metric-card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">フォロー未完了件数</div>
+                <div class="metric-value">{{ incomplete_follow_count|default:"0" }}</div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

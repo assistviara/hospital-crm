@@ -1,32 +1,65 @@
 {% extends "base.html" %}
 
-{% block title %}{{ visit.visit_date }} {{ visit.hospital.hospital_name }} | Hospital CRM{% endblock %}
+{% block title %}訪問記録詳細 | Hospital CRM{% endblock %}
 
 {% block content %}
-<a class="back-link" href="{% url 'visits:visit_list' %}">訪問記録一覧へ戻る</a>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title mb-0">訪問記録詳細</h1>
+    <a class="btn btn-outline-secondary" href="{% url 'visits:visit_list' %}">訪問記録一覧へ戻る</a>
+</div>
 
-<h2>訪問記録詳細</h2>
+<div class="row g-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">基本情報</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle mb-0">
+                        <tbody>
+                            <tr><th class="detail-label">訪問日</th><td>{{ visit.visit_date|default:"未登録" }}</td></tr>
+                            <tr>
+                                <th class="detail-label">病院名</th>
+                                <td><a href="{% url 'hospitals:hospital_detail' visit.hospital.pk %}">{{ visit.hospital.hospital_name|default:"未登録" }}</a></td>
+                            </tr>
+                            <tr><th class="detail-label">法人名</th><td>{{ visit.hospital.corporation.corporation_name|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">面談相手</th><td>{{ visit.contact_person.name|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">訪問方法</th><td>{{ visit.get_visit_method_display|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">訪問者</th><td>{{ visit.visitor_name|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">面談要約</th><td>{{ visit.summary|default:"未登録"|linebreaksbr }}</td></tr>
+                            <tr><th class="detail-label">好反応</th><td>{{ visit.positive_response|default:"未登録"|linebreaksbr }}</td></tr>
+                            <tr><th class="detail-label">懸念点</th><td>{{ visit.concern|default:"未登録"|linebreaksbr }}</td></tr>
+                            <tr><th class="detail-label">次回対応</th><td>{{ visit.next_action|default:"未登録"|linebreaksbr }}</td></tr>
+                            <tr><th class="detail-label">次回訪問予定</th><td>{{ visit.next_visit_date|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">情報信頼度</th><td>{{ visit.get_information_level_display|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">タグ</th><td>{{ visit.tags|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">フォロー状況</th><td>{{ visit.get_follow_status_display|default:"未登録" }}</td></tr>
+                            <tr><th class="detail-label">備考</th><td>{{ visit.memo|default:"未登録"|linebreaksbr }}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<table class="detail-table">
-    <tbody>
-        <tr><th>訪問日</th><td>{{ visit.visit_date }}</td></tr>
-        <tr>
-            <th>病院名</th>
-            <td><a href="{% url 'hospitals:hospital_detail' visit.hospital.pk %}">{{ visit.hospital.hospital_name }}</a></td>
-        </tr>
-        <tr><th>法人名</th><td>{{ visit.hospital.corporation.corporation_name|default:"-" }}</td></tr>
-        <tr><th>面談相手</th><td>{{ visit.contact_person.name|default:"-" }}</td></tr>
-        <tr><th>訪問方法</th><td>{{ visit.get_visit_method_display|default:"-" }}</td></tr>
-        <tr><th>訪問者</th><td>{{ visit.visitor_name|default:"-" }}</td></tr>
-        <tr><th>面談要約</th><td>{{ visit.summary|linebreaksbr|default:"-" }}</td></tr>
-        <tr><th>好反応</th><td>{{ visit.positive_response|linebreaksbr|default:"-" }}</td></tr>
-        <tr><th>懸念点</th><td>{{ visit.concern|linebreaksbr|default:"-" }}</td></tr>
-        <tr><th>次回対応</th><td>{{ visit.next_action|linebreaksbr|default:"-" }}</td></tr>
-        <tr><th>次回訪問予定</th><td>{{ visit.next_visit_date|default:"-" }}</td></tr>
-        <tr><th>情報信頼度</th><td>{{ visit.get_information_level_display }}</td></tr>
-        <tr><th>タグ</th><td>{{ visit.tags|default:"-" }}</td></tr>
-        <tr><th>フォロー状況</th><td>{{ visit.get_follow_status_display }}</td></tr>
-        <tr><th>備考</th><td>{{ visit.memo|linebreaksbr|default:"-" }}</td></tr>
-    </tbody>
-</table>
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">分析情報</div>
+            <div class="card-body">
+                <p class="mb-0 text-muted">訪問記録単体の分析指標は未登録です。営業分析画面で病院別のスコアを確認してください。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">関連情報</div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'hospitals:hospital_detail' visit.hospital.pk %}">病院詳細へ</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'visits:visit_list' %}">訪問記録一覧へ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
