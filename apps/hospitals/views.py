@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Hospital
+
+
+def hospital_list(request):
+    hospitals = Hospital.objects.select_related("corporation").order_by("hospital_name")
+    return render(request, "hospitals/hospital_list.html", {"hospitals": hospitals})

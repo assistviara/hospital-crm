@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}法人一覧 | Hospital CRM{% endblock %}
+
+{% block content %}
+<h2>法人一覧</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>法人名</th>
+            <th>法人種別</th>
+            <th>居宅介護支援</th>
+            <th>訪問看護</th>
+            <th>老健</th>
+            <th>サ高住</th>
+            <th>有料老人ホーム</th>
+            <th>運営病院数</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for corporation in corporations %}
+        <tr>
+            <td>{{ corporation.corporation_name }}</td>
+            <td>{{ corporation.corporation_type|default:"-" }}</td>
+            <td>{{ corporation.has_care_management|yesno:"あり,なし" }}</td>
+            <td>{{ corporation.has_home_nursing|yesno:"あり,なし" }}</td>
+            <td>{{ corporation.has_geriatric_health_facility|yesno:"あり,なし" }}</td>
+            <td>{{ corporation.has_senior_housing|yesno:"あり,なし" }}</td>
+            <td>{{ corporation.has_paid_nursing_home|yesno:"あり,なし" }}</td>
+            <td>{{ corporation.hospital_count }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">法人データはありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}訪問記録一覧 | Hospital CRM{% endblock %}
+
+{% block content %}
+<h2>訪問記録一覧</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>訪問日</th>
+            <th>病院名</th>
+            <th>面談相手</th>
+            <th>訪問方法</th>
+            <th>訪問者</th>
+            <th>情報信頼度</th>
+            <th>フォロー状況</th>
+            <th>次回訪問予定</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for visit in visits %}
+        <tr>
+            <td>{{ visit.visit_date }}</td>
+            <td>{{ visit.hospital.hospital_name }}</td>
+            <td>{{ visit.contact_person.name|default:"-" }}</td>
+            <td>{{ visit.get_visit_method_display|default:"-" }}</td>
+            <td>{{ visit.visitor_name|default:"-" }}</td>
+            <td>{{ visit.get_information_level_display }}</td>
+            <td>{{ visit.get_follow_status_display }}</td>
+            <td>{{ visit.next_visit_date|default:"-" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">訪問記録はありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
