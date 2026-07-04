@@ -41,3 +41,13 @@ http://127.0.0.1:8001/importer/hospitals/csv/
 ```text
 import_templates/hospital_master_template.csv
 ```
+
+## PDFから病院マスタCSVへの変換
+
+PDFを直接DB登録するのではなく、まずCSVへ変換する。
+
+```powershell
+.\.venv\Scripts\python.exe manage.py convert_hospital_pdf_to_csv pdf_sources/sample.pdf converted_csv/hospital_from_pdf.csv
+```
+
+変換元PDFは `pdf_sources/`、変換後CSVは `converted_csv/` に配置します。これらのディレクトリ内の実データはGit管理対象外です。

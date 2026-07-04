@@ -38,6 +38,10 @@ backup/
 *.csv
 !import_templates/
 !import_templates/hospital_master_template.csv
+pdf_sources/*
+converted_csv/*
+!pdf_sources/.gitkeep
+!converted_csv/.gitkeep
 
 # Development logs
 log.txt
