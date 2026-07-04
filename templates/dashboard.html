@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}ダッシュボード | Hospital CRM{% endblock %}
+
+{% block content %}
+<h2>Hospital CRM</h2>
+
+<div class="summary">
+    <div class="summary-item">
+        病院数
+        <strong>{{ hospital_count }}</strong>
+    </div>
+    <div class="summary-item">
+        法人数
+        <strong>{{ corporation_count }}</strong>
+    </div>
+    <div class="summary-item">
+        訪問記録数
+        <strong>{{ visit_count }}</strong>
+    </div>
+    <div class="summary-item">
+        紹介記録数
+        <strong>{{ referral_count }}</strong>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}病院一覧 | Hospital CRM{% endblock %}
+
+{% block content %}
+<h2>病院一覧</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>病院名</th>
+            <th>法人名</th>
+            <th>総病床数</th>
+            <th>地域包括ケア病床数</th>
+            <th>回復期リハ病床数</th>
+            <th>療養病床数</th>
+            <th>精神病床数</th>
+            <th>MSW数</th>
+            <th>退院支援看護師数</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for hospital in hospitals %}
+        <tr>
+            <td>{{ hospital.hospital_name }}</td>
+            <td>{{ hospital.corporation.corporation_name|default:"-" }}</td>
+            <td>{{ hospital.total_beds }}</td>
+            <td>{{ hospital.community_beds }}</td>
+            <td>{{ hospital.recovery_beds }}</td>
+            <td>{{ hospital.chronic_beds }}</td>
+            <td>{{ hospital.psychiatric_beds }}</td>
+            <td>{{ hospital.msw_count }}</td>
+            <td>{{ hospital.discharge_nurse_count }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">病院データはありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
