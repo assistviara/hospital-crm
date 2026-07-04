@@ -21,6 +21,7 @@ from apps.core.views import dashboard
 
 urlpatterns = [
     path('', dashboard, name='dashboard'),
+    path('analytics/', include('apps.analytics.urls')),
     path('hospitals/', include('apps.hospitals.urls')),
     path('corporations/', include('apps.corporations.urls')),
     path('visits/', include('apps.visits.urls')),

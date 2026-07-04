@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}営業分析 | Hospital CRM{% endblock %}
+
+{% block content %}
+<h2>営業分析</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>病院名</th>
+            <th>法人名</th>
+            <th>在宅復帰指数</th>
+            <th>営業可能性指数</th>
+            <th>営業活動指数</th>
+            <th>紹介実績指数</th>
+            <th>総合営業優先度</th>
+            <th>営業ランク</th>
+            <th>スコア理由</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in analytics_rows %}
+        <tr>
+            <td><a href="{% url 'hospitals:hospital_detail' row.hospital.pk %}">{{ row.hospital.hospital_name }}</a></td>
+            <td>{{ row.hospital.corporation.corporation_name|default:"-" }}</td>
+            <td>{{ row.analysis.home_return_score }}</td>
+            <td>{{ row.analysis.sales_potential_score }}</td>
+            <td>{{ row.analysis.activity_score }}</td>
+            <td>{{ row.analysis.referral_score }}</td>
+            <td>{{ row.analysis.priority_score }}</td>
+            <td>{{ row.analysis.rank }}</td>
+            <td>
+                <ul>
+                    {% for reason in row.analysis.reasons %}
+                    <li>{{ reason }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">分析対象の病院データはありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

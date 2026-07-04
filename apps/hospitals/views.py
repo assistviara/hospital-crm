@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 
+from apps.analytics.services import AnalyticsService
 from apps.referrals.models import ReferralRecord
 from apps.visits.models import VisitRecord
 from .models import Hospital
@@ -27,5 +28,6 @@ def hospital_detail(request, pk):
         "contact_persons": contact_persons,
         "visits": visits,
         "referrals": referrals,
+        "analysis": AnalyticsService.analyze_hospital(hospital),
     }
     return render(request, "hospitals/hospital_detail.html", context)

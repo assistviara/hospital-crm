@@ -7,6 +7,28 @@
 
 <h2>{{ hospital.hospital_name }}</h2>
 
+<h3 class="section-heading">営業分析</h3>
+<table class="detail-table">
+    <tbody>
+        <tr><th>在宅復帰指数</th><td>{{ analysis.home_return_score }}</td></tr>
+        <tr><th>営業可能性指数</th><td>{{ analysis.sales_potential_score }}</td></tr>
+        <tr><th>営業活動指数</th><td>{{ analysis.activity_score }}</td></tr>
+        <tr><th>紹介実績指数</th><td>{{ analysis.referral_score }}</td></tr>
+        <tr><th>総合営業優先度</th><td>{{ analysis.priority_score }}</td></tr>
+        <tr><th>営業ランク</th><td>{{ analysis.rank }}</td></tr>
+        <tr>
+            <th>スコア理由</th>
+            <td>
+                <ul>
+                    {% for reason in analysis.reasons %}
+                    <li>{{ reason }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <table class="detail-table">
     <tbody>
         <tr><th>病院名</th><td>{{ hospital.hospital_name }}</td></tr>
