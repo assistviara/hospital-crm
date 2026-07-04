@@ -1,0 +1,108 @@
+[
+{
+  "model": "corporations.corporation",
+  "pk": 1,
+  "fields": {
+    "memo": "",
+    "is_active": true,
+    "created_at": "2026-07-04T21:02:20.447Z",
+    "updated_at": "2026-07-04T21:02:20.447Z",
+    "corporation_name": "医療法人 日新会",
+    "corporation_type": "",
+    "homepage_url": "",
+    "has_care_management": false,
+    "has_home_nursing": false,
+    "has_home_care": false,
+    "has_day_service": false,
+    "has_day_care": false,
+    "has_geriatric_health_facility": false,
+    "has_senior_housing": false,
+    "has_paid_nursing_home": false
+  }
+},
+{
+  "model": "hospitals.hospital",
+  "pk": 1,
+  "fields": {
+    "memo": "",
+    "is_active": true,
+    "created_at": "2026-07-04T21:02:43.789Z",
+    "updated_at": "2026-07-04T21:02:43.789Z",
+    "corporation": 1,
+    "hospital_name": "久留米記念病院",
+    "address": "",
+    "phone": "",
+    "fax": "",
+    "homepage_url": "",
+    "total_beds": 0,
+    "general_beds": 0,
+    "chronic_beds": 0,
+    "psychiatric_beds": 0,
+    "community_beds": 0,
+    "recovery_beds": 0,
+    "disability_beds": 0,
+    "other_beds": 0,
+    "has_regional_cooperation": false,
+    "regional_department_name": "",
+    "msw_count": 0,
+    "discharge_nurse_count": 0
+  }
+},
+{
+  "model": "contacts.contactperson",
+  "pk": 1,
+  "fields": {
+    "memo": "",
+    "is_active": true,
+    "created_at": "2026-07-04T21:03:09.592Z",
+    "updated_at": "2026-07-04T21:03:09.592Z",
+    "hospital": 1,
+    "name": "地域連携室担当者",
+    "department": "",
+    "position": "",
+    "role": "",
+    "phone": "",
+    "email": "",
+    "preferred_contact_method": ""
+  }
+},
+{
+  "model": "visits.visitrecord",
+  "pk": 1,
+  "fields": {
+    "memo": "初回訪問メモ",
+    "is_active": true,
+    "created_at": "2026-07-04T21:03:51.763Z",
+    "updated_at": "2026-07-04T21:03:51.763Z",
+    "hospital": 1,
+    "contact_person": 1,
+    "visit_date": "2026-07-05",
+    "visit_method": "",
+    "visitor_name": "",
+    "summary": "",
+    "positive_response": "",
+    "concern": "",
+    "next_action": "",
+    "next_visit_date": null,
+    "information_level": "heard",
+    "tags": "",
+    "follow_status": "todo"
+  }
+},
+{
+  "model": "referrals.referralrecord",
+  "pk": 1,
+  "fields": {
+    "memo": "テスト紹介件数",
+    "is_active": true,
+    "created_at": "2026-07-04T21:04:21.010Z",
+    "updated_at": "2026-07-04T21:04:21.010Z",
+    "hospital": 1,
+    "referral_date": "2026-07-04",
+    "service_type": "",
+    "case_count": 0,
+    "contract_count": 0,
+    "care_manager_name": ""
+  }
+}
+]
