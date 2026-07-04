@@ -36,6 +36,8 @@ backup/
 *.xlsx
 *.xls
 *.csv
+!import_templates/
+!import_templates/hospital_master_template.csv
 
 # Development logs
 log.txt

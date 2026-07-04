@@ -11,3 +11,19 @@ Hospital CRM は、病院・法人・営業活動・営業分析を管理する 
 ```
 
 既存データがある環境では主キーの重複に注意してください。
+
+## 病院マスタCSVインポート
+
+テンプレート:
+
+```text
+import_templates/hospital_master_template.csv
+```
+
+実行:
+
+```powershell
+.\.venv\Scripts\python.exe manage.py import_hospitals_csv import_templates/hospital_master_template.csv
+```
+
+CSVは UTF-8 または UTF-8 BOM付きで保存してください。同名の法人がない場合は自動作成され、病院は `hospital_name + address`、次に `hospital_name` で既存データを判定して登録・更新します。

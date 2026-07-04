@@ -1,0 +1,2 @@
+hospital_name,corporation_name,address,phone,fax,homepage_url,total_beds,general_beds,chronic_beds,psychiatric_beds,community_beds,recovery_beds,disability_beds,other_beds,has_regional_cooperation,regional_department_name,msw_count,discharge_nurse_count,memo
+久留米記念病院,医療法人 日新会,福岡県久留米市,,,,160,0,160,0,0,0,0,0,true,地域連携室,1,0,テストデータ
