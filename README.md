@@ -27,3 +27,17 @@ import_templates/hospital_master_template.csv
 ```
 
 CSVは UTF-8 または UTF-8 BOM付きで保存してください。同名の法人がない場合は自動作成され、病院は `hospital_name + address`、次に `hospital_name` で既存データを判定して登録・更新します。
+
+## Web画面からの病院マスタCSVインポート
+
+URL:
+
+```text
+http://127.0.0.1:8001/importer/hospitals/csv/
+```
+
+テンプレート:
+
+```text
+import_templates/hospital_master_template.csv
+```

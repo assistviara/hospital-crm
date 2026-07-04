@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}病院マスタCSVインポート | Hospital CRM{% endblock %}
+
+{% block content %}
+<h1 class="page-title">病院マスタCSVインポート</h1>
+
+<div class="row g-4">
+    <div class="col-12 col-lg-7">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">CSVファイル選択</div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.csv_file.id_for_label }}">CSVファイル</label>
+                        <input type="file" name="{{ form.csv_file.html_name }}" id="{{ form.csv_file.id_for_label }}" class="form-control" accept=".csv" required>
+                        {% if form.csv_file.errors %}
+                        <div class="text-danger small mt-2">{{ form.csv_file.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">インポート実行</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">注意事項</div>
+            <div class="card-body">
+                <dl class="mb-3">
+                    <dt>テンプレートCSV</dt>
+                    <dd><code>{{ template_path }}</code></dd>
+                </dl>
+                <ul class="mb-0">
+                    <li>UTF-8 または UTF-8 BOM付きCSVを使用してください。</li>
+                    <li>既存病院は病院名・住所、次に病院名で更新判定します。</li>
+                    <li>インポート前に必要ならDBバックアップを行ってください。</li>
+                    <li>Web画面ではCSVファイルのみ受け付けます。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% if result %}
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">インポート結果</div>
+            <div class="card-body">
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-md-3">
+                        <div class="border rounded p-3 bg-light">
+                            <div class="text-muted small">登録件数</div>
+                            <div class="fs-4 fw-bold">{{ result.created|default:"0" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="border rounded p-3 bg-light">
+                            <div class="text-muted small">更新件数</div>
+                            <div class="fs-4 fw-bold">{{ result.updated|default:"0" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="border rounded p-3 bg-light">
+                            <div class="text-muted small">スキップ件数</div>
+                            <div class="fs-4 fw-bold">{{ result.skipped|default:"0" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="border rounded p-3 bg-light">
+                            <div class="text-muted small">エラー件数</div>
+                            <div class="fs-4 fw-bold">{{ result.errors|length }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if result.errors %}
+                <h2 class="h5">エラー詳細</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>行番号</th>
+                                <th>病院名</th>
+                                <th>エラー内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for error in result.errors %}
+                            <tr>
+                                <td>{{ error.row_number|default:"-" }}</td>
+                                <td>{{ error.hospital_name|default:"-" }}</td>
+                                <td>{{ error.error }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-success mb-0">エラーはありません。</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
