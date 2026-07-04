@@ -22,7 +22,7 @@
     <tbody>
         {% for hospital in hospitals %}
         <tr>
-            <td>{{ hospital.hospital_name }}</td>
+            <td><a href="{% url 'hospitals:hospital_detail' hospital.pk %}">{{ hospital.hospital_name }}</a></td>
             <td>{{ hospital.corporation.corporation_name|default:"-" }}</td>
             <td>{{ hospital.total_beds }}</td>
             <td>{{ hospital.community_beds }}</td>

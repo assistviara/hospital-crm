@@ -21,8 +21,8 @@
     <tbody>
         {% for visit in visits %}
         <tr>
-            <td>{{ visit.visit_date }}</td>
-            <td>{{ visit.hospital.hospital_name }}</td>
+            <td><a href="{% url 'visits:visit_detail' visit.pk %}">{{ visit.visit_date }}</a></td>
+            <td><a href="{% url 'visits:visit_detail' visit.pk %}">{{ visit.hospital.hospital_name }}</a></td>
             <td>{{ visit.contact_person.name|default:"-" }}</td>
             <td>{{ visit.get_visit_method_display|default:"-" }}</td>
             <td>{{ visit.visitor_name|default:"-" }}</td>

@@ -21,7 +21,7 @@
     <tbody>
         {% for corporation in corporations %}
         <tr>
-            <td>{{ corporation.corporation_name }}</td>
+            <td><a href="{% url 'corporations:corporation_detail' corporation.pk %}">{{ corporation.corporation_name }}</a></td>
             <td>{{ corporation.corporation_type|default:"-" }}</td>
             <td>{{ corporation.has_care_management|yesno:"あり,なし" }}</td>
             <td>{{ corporation.has_home_nursing|yesno:"あり,なし" }}</td>

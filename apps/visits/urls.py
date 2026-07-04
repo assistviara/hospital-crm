@@ -1,9 +1,10 @@
 from django.urls import path
 
-from .views import visit_list
+from . import views
 
 app_name = "visits"
 
 urlpatterns = [
-    path("", visit_list, name="visit_list"),
+    path("", views.visit_list, name="visit_list"),
+    path("<int:pk>/", views.visit_detail, name="visit_detail"),
 ]

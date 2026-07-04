@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ corporation.corporation_name }} | Hospital CRM{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'corporations:corporation_list' %}">法人一覧へ戻る</a>
+
+<h2>{{ corporation.corporation_name }}</h2>
+
+<table class="detail-table">
+    <tbody>
+        <tr><th>法人名</th><td>{{ corporation.corporation_name }}</td></tr>
+        <tr><th>法人種別</th><td>{{ corporation.corporation_type|default:"-" }}</td></tr>
+        <tr>
+            <th>ホームページ</th>
+            <td>
+                {% if corporation.homepage_url %}
+                    <a href="{{ corporation.homepage_url }}" target="_blank" rel="noopener">{{ corporation.homepage_url }}</a>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        <tr><th>居宅介護支援の有無</th><td>{{ corporation.has_care_management|yesno:"あり,なし" }}</td></tr>
+        <tr><th>訪問看護の有無</th><td>{{ corporation.has_home_nursing|yesno:"あり,なし" }}</td></tr>
+        <tr><th>訪問介護の有無</th><td>{{ corporation.has_home_care|yesno:"あり,なし" }}</td></tr>
+        <tr><th>通所介護の有無</th><td>{{ corporation.has_day_service|yesno:"あり,なし" }}</td></tr>
+        <tr><th>通所リハの有無</th><td>{{ corporation.has_day_care|yesno:"あり,なし" }}</td></tr>
+        <tr><th>老健の有無</th><td>{{ corporation.has_geriatric_health_facility|yesno:"あり,なし" }}</td></tr>
+        <tr><th>サ高住の有無</th><td>{{ corporation.has_senior_housing|yesno:"あり,なし" }}</td></tr>
+        <tr><th>有料老人ホームの有無</th><td>{{ corporation.has_paid_nursing_home|yesno:"あり,なし" }}</td></tr>
+        <tr><th>備考</th><td>{{ corporation.memo|linebreaksbr|default:"-" }}</td></tr>
+    </tbody>
+</table>
+
+<h3 class="section-heading">運営病院一覧</h3>
+<table>
+    <thead>
+        <tr>
+            <th>病院名</th>
+            <th>総病床数</th>
+            <th>地域包括ケア病床数</th>
+            <th>回復期リハ病床数</th>
+            <th>療養病床数</th>
+            <th>詳細リンク</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for hospital in hospitals %}
+        <tr>
+            <td>{{ hospital.hospital_name }}</td>
+            <td>{{ hospital.total_beds }}</td>
+            <td>{{ hospital.community_beds }}</td>
+            <td>{{ hospital.recovery_beds }}</td>
+            <td>{{ hospital.chronic_beds }}</td>
+            <td><a href="{% url 'hospitals:hospital_detail' hospital.pk %}">詳細</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">運営病院データはありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

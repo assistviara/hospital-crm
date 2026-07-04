@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ visit.visit_date }} {{ visit.hospital.hospital_name }} | Hospital CRM{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'visits:visit_list' %}">訪問記録一覧へ戻る</a>
+
+<h2>訪問記録詳細</h2>
+
+<table class="detail-table">
+    <tbody>
+        <tr><th>訪問日</th><td>{{ visit.visit_date }}</td></tr>
+        <tr>
+            <th>病院名</th>
+            <td><a href="{% url 'hospitals:hospital_detail' visit.hospital.pk %}">{{ visit.hospital.hospital_name }}</a></td>
+        </tr>
+        <tr><th>法人名</th><td>{{ visit.hospital.corporation.corporation_name|default:"-" }}</td></tr>
+        <tr><th>面談相手</th><td>{{ visit.contact_person.name|default:"-" }}</td></tr>
+        <tr><th>訪問方法</th><td>{{ visit.get_visit_method_display|default:"-" }}</td></tr>
+        <tr><th>訪問者</th><td>{{ visit.visitor_name|default:"-" }}</td></tr>
+        <tr><th>面談要約</th><td>{{ visit.summary|linebreaksbr|default:"-" }}</td></tr>
+        <tr><th>好反応</th><td>{{ visit.positive_response|linebreaksbr|default:"-" }}</td></tr>
+        <tr><th>懸念点</th><td>{{ visit.concern|linebreaksbr|default:"-" }}</td></tr>
+        <tr><th>次回対応</th><td>{{ visit.next_action|linebreaksbr|default:"-" }}</td></tr>
+        <tr><th>次回訪問予定</th><td>{{ visit.next_visit_date|default:"-" }}</td></tr>
+        <tr><th>情報信頼度</th><td>{{ visit.get_information_level_display }}</td></tr>
+        <tr><th>タグ</th><td>{{ visit.tags|default:"-" }}</td></tr>
+        <tr><th>フォロー状況</th><td>{{ visit.get_follow_status_display }}</td></tr>
+        <tr><th>備考</th><td>{{ visit.memo|linebreaksbr|default:"-" }}</td></tr>
+    </tbody>
+</table>
+{% endblock %}

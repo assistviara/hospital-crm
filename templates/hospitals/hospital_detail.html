@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}{{ hospital.hospital_name }} | Hospital CRM{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'hospitals:hospital_list' %}">病院一覧へ戻る</a>
+
+<h2>{{ hospital.hospital_name }}</h2>
+
+<table class="detail-table">
+    <tbody>
+        <tr><th>病院名</th><td>{{ hospital.hospital_name }}</td></tr>
+        <tr><th>法人名</th><td>{{ hospital.corporation.corporation_name|default:"-" }}</td></tr>
+        <tr><th>住所</th><td>{{ hospital.address|default:"-" }}</td></tr>
+        <tr><th>電話番号</th><td>{{ hospital.phone|default:"-" }}</td></tr>
+        <tr><th>FAX番号</th><td>{{ hospital.fax|default:"-" }}</td></tr>
+        <tr>
+            <th>ホームページ</th>
+            <td>
+                {% if hospital.homepage_url %}
+                    <a href="{{ hospital.homepage_url }}" target="_blank" rel="noopener">{{ hospital.homepage_url }}</a>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        <tr><th>総病床数</th><td>{{ hospital.total_beds }}</td></tr>
+        <tr><th>一般病床数</th><td>{{ hospital.general_beds }}</td></tr>
+        <tr><th>地域包括ケア病床数</th><td>{{ hospital.community_beds }}</td></tr>
+        <tr><th>回復期リハ病床数</th><td>{{ hospital.recovery_beds }}</td></tr>
+        <tr><th>療養病床数</th><td>{{ hospital.chronic_beds }}</td></tr>
+        <tr><th>精神病床数</th><td>{{ hospital.psychiatric_beds }}</td></tr>
+        <tr><th>障害者病床数</th><td>{{ hospital.disability_beds }}</td></tr>
+        <tr><th>その他病床数</th><td>{{ hospital.other_beds }}</td></tr>
+        <tr><th>地域連携部門の有無</th><td>{{ hospital.has_regional_cooperation|yesno:"あり,なし" }}</td></tr>
+        <tr><th>地域連携部署名</th><td>{{ hospital.regional_department_name|default:"-" }}</td></tr>
+        <tr><th>MSW数</th><td>{{ hospital.msw_count }}</td></tr>
+        <tr><th>退院支援看護師数</th><td>{{ hospital.discharge_nurse_count }}</td></tr>
+        <tr><th>備考</th><td>{{ hospital.memo|linebreaksbr|default:"-" }}</td></tr>
+    </tbody>
+</table>
+
+<h3 class="section-heading">担当者一覧</h3>
+<table>
+    <thead>
+        <tr>
+            <th>氏名</th>
+            <th>部署</th>
+            <th>役職</th>
+            <th>役割</th>
+            <th>電話番号</th>
+            <th>メール</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contact_persons %}
+        <tr>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.department|default:"-" }}</td>
+            <td>{{ contact.position|default:"-" }}</td>
+            <td>{{ contact.role|default:"-" }}</td>
+            <td>{{ contact.phone|default:"-" }}</td>
+            <td>{{ contact.email|default:"-" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">担当者データはありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="section-heading">訪問記録一覧</h3>
+<table>
+    <thead>
+        <tr>
+            <th>訪問日</th>
+            <th>面談相手</th>
+            <th>訪問方法</th>
+            <th>訪問者</th>
+            <th>フォロー状況</th>
+            <th>次回訪問予定</th>
+            <th>詳細リンク</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for visit in visits %}
+        <tr>
+            <td>{{ visit.visit_date }}</td>
+            <td>{{ visit.contact_person.name|default:"-" }}</td>
+            <td>{{ visit.get_visit_method_display|default:"-" }}</td>
+            <td>{{ visit.visitor_name|default:"-" }}</td>
+            <td>{{ visit.get_follow_status_display }}</td>
+            <td>{{ visit.next_visit_date|default:"-" }}</td>
+            <td><a href="{% url 'visits:visit_detail' visit.pk %}">詳細</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">訪問記録はありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="section-heading">紹介記録一覧</h3>
+<table>
+    <thead>
+        <tr>
+            <th>紹介日</th>
+            <th>サービス種別</th>
+            <th>紹介件数</th>
+            <th>契約件数</th>
+            <th>担当ケアマネ</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for referral in referrals %}
+        <tr>
+            <td>{{ referral.referral_date }}</td>
+            <td>{{ referral.service_type|default:"-" }}</td>
+            <td>{{ referral.case_count }}</td>
+            <td>{{ referral.contract_count }}</td>
+            <td>{{ referral.care_manager_name|default:"-" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">紹介記録はありません。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
