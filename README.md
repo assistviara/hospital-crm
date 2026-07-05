@@ -57,3 +57,19 @@ PDFを直接DB登録するのではなく、まずCSVへ変換する。
 ```powershell
 .\.venv\Scripts\python.exe manage.py convert_hospital_pdf_to_csv ".\病院相談窓口一覧（令和8年6月改訂）.pdf" converted_csv/hospital_from_pdf.csv
 ```
+
+## Web画面からのPDF→CSV変換
+
+URL:
+
+```text
+http://127.0.0.1:8001/importer/hospitals/pdf/
+```
+
+流れ:
+
+1. PDFをアップロード
+2. CSVへ変換
+3. `converted_csv/hospital_from_pdf.csv` を確認
+4. 必要に応じて修正
+5. CSVインポート画面から取り込む

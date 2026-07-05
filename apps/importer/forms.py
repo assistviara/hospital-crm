@@ -16,3 +16,18 @@ class HospitalCSVImportForm(forms.Form):
             raise forms.ValidationError("空のCSVファイルはアップロードできません。")
 
         return csv_file
+
+
+class HospitalPDFConvertForm(forms.Form):
+    pdf_file = forms.FileField(label="PDFファイル")
+
+    def clean_pdf_file(self):
+        pdf_file = self.cleaned_data["pdf_file"]
+
+        if Path(pdf_file.name).suffix.lower() != ".pdf":
+            raise forms.ValidationError("PDFファイルを選択してください。")
+
+        if pdf_file.size == 0:
+            raise forms.ValidationError("空のPDFファイルはアップロードできません。")
+
+        return pdf_file

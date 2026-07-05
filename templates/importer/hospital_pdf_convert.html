@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}PDFから病院マスタCSVへ変換 | Hospital CRM{% endblock %}
+
+{% block content %}
+<h1 class="page-title">PDFから病院マスタCSVへ変換</h1>
+
+<div class="row g-4">
+    <div class="col-12 col-lg-7">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">PDFファイル選択</div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.pdf_file.id_for_label }}">PDFファイル</label>
+                        <input type="file" name="{{ form.pdf_file.html_name }}" id="{{ form.pdf_file.id_for_label }}" class="form-control" accept=".pdf" required>
+                        {% if form.pdf_file.errors %}
+                        <div class="text-danger small mt-2">{{ form.pdf_file.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">CSVへ変換</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">注意事項</div>
+            <div class="card-body">
+                <ul class="mb-0">
+                    <li>PDFは直接DB登録しません。</li>
+                    <li>まずCSVへ変換します。</li>
+                    <li>変換後CSVを確認・修正してからCSVインポートしてください。</li>
+                    <li>PDFのレイアウトにより抽出精度が変わります。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% if result %}
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-bold">変換結果</div>
+            <div class="card-body">
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-4">
+                        <div class="border rounded p-3 bg-light">
+                            <div class="text-muted small">変換件数</div>
+                            <div class="fs-4 fw-bold">{{ result.exported|default:"0" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="border rounded p-3 bg-light">
+                            <div class="text-muted small">出力CSVパス</div>
+                            <code>{{ output_csv_path }}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="h5">先頭5件の病院名</h2>
+                {% if preview_hospital_names %}
+                <ol>
+                    {% for hospital_name in preview_hospital_names %}
+                    <li>{{ hospital_name }}</li>
+                    {% endfor %}
+                </ol>
+                {% else %}
+                <p class="text-muted">病院名候補はありません。</p>
+                {% endif %}
+
+                {% if result.errors %}
+                <div class="alert alert-danger">
+                    <div class="fw-bold">エラー内容</div>
+                    <ul class="mb-0">
+                        {% for error in result.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <div class="alert alert-success">変換が完了しました。</div>
+                {% endif %}
+
+                <div class="alert alert-info mb-0">
+                    次の手順: CSVを確認・修正してからインポートしてください。
+                    <a class="btn btn-sm btn-outline-primary ms-2" href="{% url 'importer:hospital_csv_import' %}">CSVインポート画面へ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
