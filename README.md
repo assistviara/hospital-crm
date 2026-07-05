@@ -73,3 +73,19 @@ http://127.0.0.1:8001/importer/hospitals/pdf/
 3. `converted_csv/hospital_from_pdf.csv` を確認
 4. 必要に応じて修正
 5. CSVインポート画面から取り込む
+
+## CSVインポート前レビュー
+
+変換済みCSVをDB登録前に確認する。
+
+URL:
+
+```text
+http://127.0.0.1:8001/importer/hospitals/csv/review/
+```
+
+対象CSV:
+
+```text
+converted_csv/hospital_from_pdf.csv
+```

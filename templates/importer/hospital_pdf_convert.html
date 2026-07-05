@@ -93,7 +93,8 @@
 
                 <div class="alert alert-info mb-0">
                     次の手順: CSVを確認・修正してからインポートしてください。
-                    <a class="btn btn-sm btn-outline-primary ms-2" href="{% url 'importer:hospital_csv_import' %}">CSVインポート画面へ</a>
+                    <a class="btn btn-sm btn-outline-primary ms-2" href="{% url 'importer:hospital_csv_review' %}">CSVレビュー画面へ</a>
+                    <a class="btn btn-sm btn-outline-secondary ms-2" href="{% url 'importer:hospital_csv_import' %}">CSVインポート画面へ</a>
                 </div>
             </div>
         </div>
