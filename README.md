@@ -51,3 +51,9 @@ PDFを直接DB登録するのではなく、まずCSVへ変換する。
 ```
 
 変換元PDFは `pdf_sources/`、変換後CSVは `converted_csv/` に配置します。これらのディレクトリ内の実データはGit管理対象外です。
+
+## 実PDFからCSVへの変換例
+
+```powershell
+.\.venv\Scripts\python.exe manage.py convert_hospital_pdf_to_csv ".\病院相談窓口一覧（令和8年6月改訂）.pdf" converted_csv/hospital_from_pdf.csv
+```
