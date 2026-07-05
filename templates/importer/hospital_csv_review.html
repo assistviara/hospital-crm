@@ -20,7 +20,7 @@
 
 {% if review_result.csv_exists %}
 <div class="row g-3 mb-4">
-    <div class="col-6 col-lg-3">
+    <div class="col-6 col-lg">
         <div class="card border-0 shadow-sm metric-card">
             <div class="card-body">
                 <div class="text-muted small">総行数</div>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6 col-lg-3">
+    <div class="col-6 col-lg">
         <div class="card border-0 shadow-sm metric-card">
             <div class="card-body">
                 <div class="text-muted small">新規登録予定件数</div>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6 col-lg-3">
+    <div class="col-6 col-lg">
         <div class="card border-0 shadow-sm metric-card">
             <div class="card-body">
                 <div class="text-muted small">更新予定件数</div>
@@ -44,13 +44,61 @@
             </div>
         </div>
     </div>
-    <div class="col-6 col-lg-3">
+    <div class="col-6 col-lg">
         <div class="card border-0 shadow-sm metric-card">
             <div class="card-body">
                 <div class="text-muted small">エラー件数</div>
                 <div class="metric-value">{{ review_result.error_count }}</div>
             </div>
         </div>
+    </div>
+    <div class="col-6 col-lg">
+        <div class="card border-0 shadow-sm metric-card">
+            <div class="card-body">
+                <div class="text-muted small">Hospital件数</div>
+                <div class="metric-value">{{ hospital_count }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if import_errors %}
+<div class="alert alert-danger">
+    <div class="fw-bold">インポートエラー</div>
+    <ul class="mb-0">
+        {% for error in import_errors %}
+        <li>
+            行番号: {{ error.row_number|default:"-" }} /
+            病院名: {{ error.hospital_name|default:"未登録" }} /
+            {{ error.error }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white fw-bold">ImportSession作成</div>
+    <div class="card-body">
+        <p class="text-muted">本運用では、ImportSessionとして保存して差分確認後に反映することを推奨します。</p>
+        <form method="post" action="{% url 'importer:hospital_csv_session_create' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">ImportSessionとして保存</button>
+            <a class="btn btn-outline-secondary ms-2" href="{% url 'importer:import_session_list' %}">インポート履歴へ</a>
+        </form>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white fw-bold">即時インポート</div>
+    <div class="card-body">
+        <div class="alert alert-warning">
+            即時インポートは差分確認を挟まずHospitalマスタへ登録・更新します。
+        </div>
+        <form method="post" action="{% url 'importer:hospital_csv_import_execute' %}" onsubmit="return confirm('本当にHospitalマスタへ登録しますか？');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Hospitalマスタへ取り込む</button>
+        </form>
     </div>
 </div>
 

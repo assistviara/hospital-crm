@@ -1,6 +1,53 @@
 # Hospital CRM
 
-Hospital CRM は、病院・法人・営業活動・営業分析を管理する Django アプリケーションです。
+Hospital & Regional Collaboration Management
+
+居宅介護支援事業所における病院営業・地域連携活動を支援するDjangoアプリケーション。
+
+## Version
+
+0.1
+
+## Version 0.1 status
+
+Released / 基盤機能完成
+
+## 主な機能
+
+- 病院マスタ管理
+- 法人マスタ管理
+- 営業履歴管理
+- 紹介実績管理
+- 営業分析
+- PDF→CSV変換
+- CSVレビュー
+- ImportSession
+- 差分確認
+- 選択更新
+
+## ドキュメント
+
+docs/ 以下に設計書を配置。
+
+主要ドキュメント:
+
+- 00_開発規約.md
+- 01_システム概要.md
+- 02_システム構成.md
+- 03_ER図.md
+- 03.5_Djangoモデル設計.md
+- 04_病院マスタ.md
+- 05_法人マスタ.md
+- 06_営業履歴.md
+- 07_営業分析.md
+- 08_AI設計.md
+- 09_画面設計.md
+- 10_インポート設計.md
+- 11_運用設計.md
+- 16_RELEASE_NOTE_v0.1.md
+- 17_Version0.2運用設計.md
+- 18_弱シグナル設計.md
+- 19_実装ロードマップ.md
 
 ## テストデータ復元方法
 
@@ -89,3 +136,36 @@ http://127.0.0.1:8001/importer/hospitals/csv/review/
 ```text
 converted_csv/hospital_from_pdf.csv
 ```
+
+## Hospital CRM利用手順
+
+PDFから病院マスタを登録する基本の流れ:
+
+1. PDFをアップロード
+2. CSVへ変換
+3. CSVレビュー画面で登録予定・更新予定・エラーを確認
+4. 「Hospitalマスタへ取り込む」でHospital登録
+
+## インポート履歴・差分管理
+
+ImportSession:
+1回のインポート作業を管理する。
+
+ImportRecord:
+1病院ごとのインポート候補行を管理する。
+
+一覧画面:
+
+```text
+http://127.0.0.1:8001/importer/sessions/
+```
+
+ImportSessionを使う運用手順:
+
+1. PDFアップロード
+2. CSV変換
+3. CSVレビュー
+4. ImportSession作成
+5. ImportSession詳細画面で差分確認
+6. 反映する行を選択
+7. 選択更新でHospitalマスタへ反映

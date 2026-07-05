@@ -54,6 +54,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'importer:hospital_csv_import' %}">CSVインポート</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'importer:hospital_csv_review' %}">CSVレビュー</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'importer:hospital_pdf_convert' %}">PDF変換</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'importer:import_session_list' %}">インポート履歴</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Django Admin</a></li>
                 </ul>
             </div>
@@ -61,6 +62,14 @@
     </nav>
 
     <main class="container py-4">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert {% if 'error' in message.tags %}alert-danger{% elif 'success' in message.tags %}alert-success{% elif 'warning' in message.tags %}alert-warning{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="閉じる"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
 

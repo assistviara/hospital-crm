@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}インポート履歴 | Hospital CRM{% endblock %}
+
+{% block content %}
+<h1 class="page-title">インポート履歴</h1>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-bold">インポートセッション一覧</div>
+    <div class="card-body">
+        {% if sessions %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>作成日時</th>
+                        <th>ソース種別</th>
+                        <th>ソース名</th>
+                        <th>ステータス</th>
+                        <th>総件数</th>
+                        <th>新規件数</th>
+                        <th>更新件数</th>
+                        <th>エラー件数</th>
+                        <th>反映件数</th>
+                        <th>詳細</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for session in sessions %}
+                    <tr>
+                        <td>{{ session.id }}</td>
+                        <td>{{ session.created_at|date:"Y-m-d H:i" }}</td>
+                        <td>{{ session.get_source_type_display }}</td>
+                        <td class="fw-bold">{{ session.source_name|default:"未登録" }}</td>
+                        <td>{{ session.get_status_display }}</td>
+                        <td>{{ session.total_count }}</td>
+                        <td>{{ session.new_count }}</td>
+                        <td>{{ session.update_count }}</td>
+                        <td>{{ session.error_count }}</td>
+                        <td>{{ session.applied_count }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary" href="{% url 'importer:import_session_detail' session.pk %}">詳細</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info mb-0">インポート履歴はまだありません。</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
