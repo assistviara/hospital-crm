@@ -169,3 +169,15 @@ ImportSessionを使う運用手順:
 5. ImportSession詳細画面で差分確認
 6. 反映する行を選択
 7. 選択更新でHospitalマスタへ反映
+
+## 通常画面からの登録・編集・削除
+
+Hospital CRMでは、Django Adminを使わずに以下を通常画面から管理できる。
+
+- 病院
+- 法人
+- 担当者
+- 訪問記録
+- 紹介記録
+
+削除は物理削除ではなく、`is_active=False` による論理削除とする。

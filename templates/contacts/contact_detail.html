@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}担当者詳細 | Hospital CRM{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title mb-0">担当者詳細</h1>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" href="{% url 'contacts:contact_list' %}">一覧へ戻る</a>
+        <a class="btn btn-primary" href="{% url 'contacts:contact_update' contact.pk %}">編集</a>
+        <a class="btn btn-outline-danger" href="{% url 'contacts:contact_delete' contact.pk %}">削除</a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-bold">基本情報</div>
+    <div class="card-body">
+        <table class="table table-sm align-middle mb-0">
+            <tbody>
+                <tr><th class="detail-label">氏名</th><td>{{ contact.name|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">病院名</th><td><a href="{% url 'hospitals:hospital_detail' contact.hospital.pk %}">{{ contact.hospital.hospital_name }}</a></td></tr>
+                <tr><th class="detail-label">部署</th><td>{{ contact.department|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">役職</th><td>{{ contact.position|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">役割</th><td>{{ contact.role|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">電話番号</th><td>{{ contact.phone|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">メール</th><td>{{ contact.email|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">希望連絡方法</th><td>{{ contact.preferred_contact_method|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">備考</th><td>{{ contact.memo|default:"未登録"|linebreaksbr }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

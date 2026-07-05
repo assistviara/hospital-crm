@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}紹介記録詳細 | Hospital CRM{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title mb-0">紹介記録詳細</h1>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" href="{% url 'referrals:referral_list' %}">一覧へ戻る</a>
+        <a class="btn btn-primary" href="{% url 'referrals:referral_update' referral.pk %}">編集</a>
+        <a class="btn btn-outline-danger" href="{% url 'referrals:referral_delete' referral.pk %}">削除</a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-bold">基本情報</div>
+    <div class="card-body">
+        <table class="table table-sm align-middle mb-0">
+            <tbody>
+                <tr><th class="detail-label">紹介日</th><td>{{ referral.referral_date|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">病院名</th><td><a href="{% url 'hospitals:hospital_detail' referral.hospital.pk %}">{{ referral.hospital.hospital_name }}</a></td></tr>
+                <tr><th class="detail-label">サービス種別</th><td>{{ referral.service_type|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">紹介件数</th><td>{{ referral.case_count|default:"0" }}</td></tr>
+                <tr><th class="detail-label">契約件数</th><td>{{ referral.contract_count|default:"0" }}</td></tr>
+                <tr><th class="detail-label">担当ケアマネ</th><td>{{ referral.care_manager_name|default:"未登録" }}</td></tr>
+                <tr><th class="detail-label">備考</th><td>{{ referral.memo|default:"未登録"|linebreaksbr }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

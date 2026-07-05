@@ -24,7 +24,9 @@ urlpatterns = [
     path('analytics/', include('apps.analytics.urls')),
     path('hospitals/', include('apps.hospitals.urls')),
     path('corporations/', include('apps.corporations.urls')),
+    path('contacts/', include('apps.contacts.urls')),
     path('visits/', include('apps.visits.urls')),
+    path('referrals/', include('apps.referrals.urls')),
     path('importer/', include('apps.importer.urls')),
     path('admin/', admin.site.urls),
 ]

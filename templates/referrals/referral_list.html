@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}紹介記録一覧 | Hospital CRM{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title mb-0">紹介記録一覧</h1>
+    <a class="btn btn-primary" href="{% url 'referrals:referral_create' %}">＋紹介記録登録</a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>紹介日</th>
+                        <th>病院名</th>
+                        <th>サービス種別</th>
+                        <th>紹介件数</th>
+                        <th>契約件数</th>
+                        <th>担当ケアマネ</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for referral in referrals %}
+                    <tr>
+                        <td class="fw-bold">{{ referral.referral_date|default:"未登録" }}</td>
+                        <td>{{ referral.hospital.hospital_name|default:"未登録" }}</td>
+                        <td>{{ referral.service_type|default:"未登録" }}</td>
+                        <td>{{ referral.case_count|default:"0" }}</td>
+                        <td>{{ referral.contract_count|default:"0" }}</td>
+                        <td>{{ referral.care_manager_name|default:"未登録" }}</td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'referrals:referral_detail' referral.pk %}">詳細</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'referrals:referral_update' referral.pk %}">編集</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'referrals:referral_delete' referral.pk %}">削除</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center text-muted">データなし</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

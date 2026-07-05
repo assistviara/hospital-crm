@@ -3,7 +3,10 @@
 {% block title %}訪問記録一覧 | Hospital CRM{% endblock %}
 
 {% block content %}
-<h1 class="page-title">訪問記録一覧</h1>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title mb-0">訪問記録一覧</h1>
+    <a class="btn btn-primary" href="{% url 'visits:visit_create' %}">＋訪問記録登録</a>
+</div>
 
 <div class="card border-0 shadow-sm">
     <div class="card-body">
@@ -19,7 +22,7 @@
                         <th>情報信頼度</th>
                         <th>フォロー状況</th>
                         <th>次回訪問予定</th>
-                        <th>詳細</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +36,13 @@
                         <td>{{ visit.get_information_level_display|default:"未登録" }}</td>
                         <td>{{ visit.get_follow_status_display|default:"未登録" }}</td>
                         <td>{{ visit.next_visit_date|default:"未登録" }}</td>
-                        <td><a class="btn btn-sm btn-outline-primary" href="{% url 'visits:visit_detail' visit.pk %}">詳細</a></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'visits:visit_detail' visit.pk %}">詳細</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'visits:visit_update' visit.pk %}">編集</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'visits:visit_delete' visit.pk %}">削除</a>
+                            </div>
+                        </td>
                     </tr>
                     {% empty %}
                     <tr>

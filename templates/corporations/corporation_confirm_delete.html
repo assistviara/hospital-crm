@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}法人削除 | Hospital CRM{% endblock %}
+
+{% block content %}
+<h1 class="page-title">法人削除</h1>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="alert alert-warning">この法人を削除します。データは物理削除せず、非表示にします。</div>
+        <p class="fw-bold">{{ corporation.corporation_name }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">削除する</button>
+            <a class="btn btn-outline-secondary" href="{% url 'corporations:corporation_detail' corporation.pk %}">キャンセル</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

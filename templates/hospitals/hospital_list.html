@@ -5,6 +5,7 @@
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-3">
     <h1 class="page-title mb-0">病院一覧</h1>
+    <a class="btn btn-primary" href="{% url 'hospitals:hospital_create' %}">＋病院登録</a>
 </div>
 
 <div class="card border-0 shadow-sm">
@@ -22,7 +23,7 @@
                         <th>精神病床数</th>
                         <th>MSW数</th>
                         <th>退院支援看護師数</th>
-                        <th>詳細</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +38,13 @@
                         <td>{{ hospital.psychiatric_beds|default:"0" }}</td>
                         <td>{{ hospital.msw_count|default:"0" }}</td>
                         <td>{{ hospital.discharge_nurse_count|default:"0" }}</td>
-                        <td><a class="btn btn-sm btn-outline-primary" href="{% url 'hospitals:hospital_detail' hospital.pk %}">詳細</a></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'hospitals:hospital_detail' hospital.pk %}">詳細</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'hospitals:hospital_update' hospital.pk %}">編集</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'hospitals:hospital_delete' hospital.pk %}">削除</a>
+                            </div>
+                        </td>
                     </tr>
                     {% empty %}
                     <tr>

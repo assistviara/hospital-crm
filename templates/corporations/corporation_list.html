@@ -3,7 +3,10 @@
 {% block title %}法人一覧 | Hospital CRM{% endblock %}
 
 {% block content %}
-<h1 class="page-title">法人一覧</h1>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title mb-0">法人一覧</h1>
+    <a class="btn btn-primary" href="{% url 'corporations:corporation_create' %}">＋法人登録</a>
+</div>
 
 <div class="card border-0 shadow-sm">
     <div class="card-body">
@@ -19,7 +22,7 @@
                         <th>サ高住</th>
                         <th>有料老人ホーム</th>
                         <th>運営病院数</th>
-                        <th>詳細</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +36,13 @@
                         <td>{{ corporation.has_senior_housing|yesno:"あり,なし" }}</td>
                         <td>{{ corporation.has_paid_nursing_home|yesno:"あり,なし" }}</td>
                         <td>{{ corporation.hospital_count|default:"0" }}</td>
-                        <td><a class="btn btn-sm btn-outline-primary" href="{% url 'corporations:corporation_detail' corporation.pk %}">詳細</a></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'corporations:corporation_detail' corporation.pk %}">詳細</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'corporations:corporation_update' corporation.pk %}">編集</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'corporations:corporation_delete' corporation.pk %}">削除</a>
+                            </div>
+                        </td>
                     </tr>
                     {% empty %}
                     <tr>
